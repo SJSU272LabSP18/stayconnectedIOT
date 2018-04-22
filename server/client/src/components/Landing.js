@@ -9,8 +9,6 @@ const styles = {
 const Landing = () => {
   return (
     <div className="container-fluid">
-      <h1 align="center">Lab View Made Easy</h1>
-
       <div
         id="carouselExampleControls"
         className="carousel slide"
@@ -60,6 +58,37 @@ const Landing = () => {
           <span className="carousel-control-next-icon" aria-hidden="true" />
           <span className="sr-only">Next</span>
         </a>
+      </div>
+      <div className="jumbotron">
+        <h1 className="display-4">Lab Monitoring Made Easy!</h1>
+        <p className="lead">A bit about the project..</p>
+
+        <p>
+          <strong>Scope:</strong> <br />
+          Our design may be a Distributed Active Climate Control System for
+          large data centers. The server racks are laid out in grids with
+          cooling units and lighting units (for maintenance and operation).{' '}
+          <br />
+          <strong>
+            Our system would utilize distributed low cost IoT sensors to perform
+            these tasks including:{' '}
+          </strong>{' '}
+          <br />
+          - Ambient Temperature Monitoring <br />
+          - HVAC Control (Small servo used to showcase fan operation) <br />
+          - Motion Sensing <br />
+          - Lighting Control <br />
+          <br />
+          <strong>Features: </strong>
+          <br />
+          - Raspberry Pi Computing Module (Parent Node/Stand alone) <br />
+          - WiFi MicroController (Optional for increased complexity) (Child
+          Node/Stand alone IFFT Device) <br />
+          - Redundancy and node failover i.e. all nodes communicate at all times{' '}
+          <br />
+          - Constrain Resolver to distribute communication load among nodes to
+          balance traffic <br />
+        </p>
       </div>
 
       <br />
