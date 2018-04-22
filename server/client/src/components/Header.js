@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+require('../css/header.css');
 
 class Header extends Component {
   renderContent() {
@@ -10,27 +11,38 @@ class Header extends Component {
       case false:
         return (
           <li>
-            <a href="/auth/google"> Login With Google</a>
+            <Link to="/auth/google"> Login With Google</Link>
           </li>
         );
       default:
         return (
           <li>
-            <a href="/api/logout">Logout</a>
+            <Link to="/api/logout">Logout</Link>
           </li>
         );
     }
   }
   render() {
     return (
-      <div className="nav-wrapper">
-        <Link
-          to={this.props.auth ? '/dashboard' : '/'}
-          className="left brand-logo"
+      <div className="headertext">
+        <nav
+          className="navbar navbar-light"
+          style={{ background: '#0d0d26', height: 60 }}
         >
-          StayConnected
-        </Link>
-        <ul className="right">{this.renderContent()}</ul>
+          <Link
+            to={this.props.auth ? '/dashboard' : '/'}
+            className="left brand-logo "
+          >
+            StayConnected
+          </Link>
+
+          <Link to="/app/location/dashboard">Dashboard</Link>
+
+          <ul className="right">
+            {this.renderContent()}
+          </ul>
+        </nav>
+        <br />
       </div>
     );
   }

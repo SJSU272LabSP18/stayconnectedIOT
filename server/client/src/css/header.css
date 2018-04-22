@@ -1,0 +1,12 @@
+.headertext {
+  color: white;
+}
+a {
+  color: white;
+}
+a:visited {
+  color: white;
+}
+a:hover {
+  color: #5bc0de;
+}
