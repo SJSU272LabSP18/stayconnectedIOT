@@ -8,6 +8,9 @@ class Barchart extends Component {
       chartData: props.chartData,
       displayTitle: props.displayTitle
     };
+
+    console.log(this.props);
+    console.log('Im here');
   }
 
   render() {

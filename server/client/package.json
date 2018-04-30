@@ -8,14 +8,20 @@
     },
     "/api/*": {
       "target": "http://localhost:5000"
+    },
+    "/conditions/*": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "bootstrap": "^4.1.0",
     "chart.js": "^2.7.2",
-    "lodash": "^4.17.5",
+    "css-loader": "^0.28.11",
+    "lodash": "^4.17.10",
     "materialize-css": "^0.100.2",
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
     "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.2.0",
     "react-icons-kit": "^1.0.7",

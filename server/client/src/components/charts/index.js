@@ -174,12 +174,14 @@ class Charts extends Component {
           <div className="col-lg-12">
             <div className="card">
               <div className="card-body">
-                {this.state.avgPower.label
-                  ? <Linechart
-                      chartData={this.state.avgPower}
-                      displayTitle={this.state.avgPower.label}
-                    />
-                  : ''}
+                {this.state.avgPower.label ? (
+                  <Linechart
+                    chartData={this.state.avgPower}
+                    displayTitle={this.state.avgPower.label}
+                  />
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </div>
@@ -189,36 +191,42 @@ class Charts extends Component {
           <div className="col-sm-4">
             <div className="card">
               <div className="card-body ">
-                {this.state.activeData.labels
-                  ? <Piechart
-                      chartData={this.state.activeData}
-                      displayTitle={this.state.activeData.label}
-                    />
-                  : ''}
+                {this.state.activeData.labels ? (
+                  <Piechart
+                    chartData={this.state.activeData}
+                    displayTitle={this.state.activeData.label}
+                  />
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </div>
           <div className="col-sm-4">
             <div className="card">
               <div className="card-body">
-                {this.state.temperatureData.labels.length != 0
-                  ? <Barchart
-                      chartData={this.state.temperatureData}
-                      displayTitle={this.state.temperatureData.label}
-                    />
-                  : ''}
+                {this.state.temperatureData.labels.length != 0 ? (
+                  <Barchart
+                    chartData={this.state.temperatureData}
+                    displayTitle={this.state.temperatureData.label}
+                  />
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </div>
           <div className="col-sm-4">
             <div className="card">
               <div className="card-body">
-                {this.state.PowerData.labels
-                  ? <Doughnutchart
-                      chartData={this.state.PowerData}
-                      displayTitle={this.state.PowerData.label}
-                    />
-                  : ''}
+                {this.state.PowerData.labels ? (
+                  <Doughnutchart
+                    chartData={this.state.PowerData}
+                    displayTitle={this.state.PowerData.label}
+                  />
+                ) : (
+                  ''
+                )}
               </div>
             </div>
             <br />

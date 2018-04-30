@@ -16,13 +16,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.2",
     "concurrently": "^3.5.1",
     "cookie-session": "^2.0.0-beta.3",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
+    "http": "0.0.0",
     "mongoose": "^5.0.2",
     "nodemon": "^1.14.11",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
-    "socket.io": "^2.0.4"
+    "pg": "^7.4.1",
+    "socker.io": "0.0.0-alpha-beta",
+    "socket.io": "^2.0.4",
+    "url": "^0.11.0"
   }
 }

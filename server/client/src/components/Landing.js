@@ -1,6 +1,6 @@
 import React from 'react';
 import img1 from '../img/img1.png';
-import img2 from '../img/img2.png';
+
 import img3 from '../img/img3.png';
 const styles = {
   width: '100%',
@@ -26,7 +26,7 @@ const Landing = () => {
           <div className="carousel-item">
             <img
               className="d-block w-100"
-              src={img2}
+              src={img3}
               alt="Second slide"
               style={styles}
             />

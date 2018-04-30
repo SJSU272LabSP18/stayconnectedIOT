@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-require('../css/header.css');
+//require('../assets/css/header.css');
 
 class Header extends Component {
   renderContent() {
@@ -24,26 +24,84 @@ class Header extends Component {
   }
   render() {
     return (
-      <div className="headertext">
-        <nav
-          className="navbar navbar-light"
-          style={{ background: '#0d0d26', height: 60 }}
-        >
-          <Link
-            to={this.props.auth ? '/dashboard' : '/'}
-            className="left brand-logo "
-          >
-            StayConnected
-          </Link>
+      <div className="main-panel">
+        <nav className="navbar navbar-default navbar-fixed">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <button
+                type="button"
+                className="navbar-toggle"
+                data-toggle="collapse"
+              >
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar" />
+                <span className="icon-bar" />
+                <span className="icon-bar" />
+              </button>
+              <a className="navbar-brand" href="#">
+                Dashboard
+              </a>
+            </div>
+            <div className="collapse navbar-collapse">
+              <ul className="nav navbar-nav navbar-left">
+                <li>
+                  <a
+                    href="#"
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                  >
+                    <i className="fa fa-dashboard" />
+                  </a>
+                </li>
+              </ul>
 
-          <Link to="/app/location/dashboard">Dashboard</Link>
-
-          <ul className="right">
-            {this.renderContent()}
-          </ul>
+              <ul className="nav navbar-nav navbar-right">
+                <li>
+                  <a href="">Account</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </nav>
-        <br />
       </div>
+      // <div className="main-panel">
+      //   <nav className="navbar navbar-default navbar-fixed">
+      //     <div className="container-fluid">
+      //       <div className="navbar-header">
+      //         <button
+      //           type="button"
+      //           className="navbar-toggle"
+      //           data-toggle="collapse"
+      //         >
+      //           <span className="sr-only">Toggle navigation</span>
+      //           <span className="icon-bar" />
+      //           <span className="icon-bar" />
+      //           <span className="icon-bar" />
+      //         </button>
+      //         <a className="navbar-brand" href="#">
+      //           Dashboard
+      //         </a>
+      //       </div>
+      //       <div className="collapse navbar-collapse">
+      //         <ul className="nav navbar-nav navbar-left">
+      //           <li>
+      //             <a
+      //               href="#"
+      //               className="dropdown-toggle"
+      //               data-toggle="dropdown"
+      //             >
+      //               <i className="fa fa-dashboard" />
+      //             </a>
+      //           </li>
+      //         </ul>
+      //
+      //         <ul className="nav navbar-nav navbar-right">
+      //           <li>{this.renderContent()}</li>
+      //         </ul>
+      //       </div>
+      //     </div>
+      //   </nav>
+      // </div>
     );
   }
 }
