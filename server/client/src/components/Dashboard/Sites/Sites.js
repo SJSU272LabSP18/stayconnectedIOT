@@ -58,7 +58,12 @@ class Sites extends Component {
     });
   }
   render() {
-    return <div className="row">{this.renderSites()}</div>;
+    return (
+      <div>
+        <h1> Sites</h1>
+        <div className="row">{this.renderSites()}</div>
+      </div>
+    );
   }
 }
 function mapStateToProps({ sites }) {

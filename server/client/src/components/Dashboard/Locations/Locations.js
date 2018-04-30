@@ -76,7 +76,12 @@ class Locations extends Component {
 
   renderSiteLocation() {}
   render() {
-    return <div className="row">{this.renderLocations()}</div>;
+    return (
+      <div>
+        <h1>Locations</h1>
+        <div className="row">{this.renderLocations()}</div>
+      </div>
+    );
   }
 }
 function mapStateToProps({ locations }) {

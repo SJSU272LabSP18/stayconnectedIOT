@@ -139,9 +139,13 @@ class Zones extends Component {
   }
   render() {
     return (
-      <div className="row">
-        {this.renderZones()}
-        {this.renderChart()}
+      <div>
+        <h1> Zones</h1>
+
+        <div className="row">
+          {this.renderZones()}
+          {this.renderChart()}
+        </div>
       </div>
     );
   }
