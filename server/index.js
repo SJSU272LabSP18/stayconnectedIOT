@@ -34,6 +34,7 @@ require('./routes/locationRoutes')(app);
 require('./routes/siteRoutes')(app);
 require('./routes/zoneRoutes')(app);
 require('./routes/authRoutes')(app);
+require('./routes/nodeRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
 

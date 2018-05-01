@@ -7,7 +7,7 @@ class Navbar extends Component {
         <div className="sidebar" data-color="blue" data-image={imagine}>
           <div className="sidebar-wrapper" style={{ padding: '50px' }}>
             <div className="logo">
-              <a href="/dashboard/sites" className="simple-text">
+              <a href="/" className="simple-text">
                 <img
                   src="https://user-images.githubusercontent.com/10326883/36414375-e9339856-15d6-11e8-9bbd-035581f8416e.jpg"
                   style={{ height: '30px', width: '30px' }}
@@ -45,6 +45,14 @@ class Navbar extends Component {
                 <a href="/dashboard/zones">
                   <i className="pe-7s-science" />
                   <p>Zones</p>
+                </a>
+              </li>
+            </ul>
+            <ul className="nav">
+              <li className="active">
+                <a href="/dashboard/nodes">
+                  <i className="pe-7s-news-paper" />
+                  <p>Nodes</p>
                 </a>
               </li>
             </ul>

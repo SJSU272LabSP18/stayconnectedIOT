@@ -1,7 +1,7 @@
 var Postgress = require('../db');
 
 module.exports = app => {
-  app.get('/nodes', (req, res) => {
+  app.get('/api/nodes', (req, res) => {
     const sql = 'Select * FROM site_ops.node';
     Postgress.fetchData(function(error, results) {
       if (error) {
@@ -12,7 +12,7 @@ module.exports = app => {
       }
     }, sql);
   });
-  app.get('/nodes/:nodeId', (req, res) => {
+  app.get('/api/nodes/:nodeId', (req, res) => {
     const siteId = req.params.nodeId;
     const sql =
       'Select * FROM site_ops.node where site_ops.node.node_id=' + siteId;

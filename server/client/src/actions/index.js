@@ -6,7 +6,10 @@ import {
   FETCH_ZONES,
   FETCH_LOCATION_ZONES,
   FETCH_SITE_LOCATIONS,
-  FETCH_LOCATION_CHARTS
+  FETCH_ZONE_NODES,
+  FETCH_LOCATION_CHARTS,
+  FETCH_ZONE_CHARTS,
+  FETCH_NODES
 } from './types';
 
 export const fetchUser = () => async dispatch => {
@@ -32,11 +35,20 @@ export const fetchAllZones = () => async dispatch => {
 
   dispatch({ type: FETCH_ZONES, payload: res.data });
 };
+export const fetchAllNodes = () => async dispatch => {
+  const res = await axios.get('/api/nodes');
+
+  dispatch({ type: FETCH_NODES, payload: res.data });
+};
 
 export const fetchLocationZone = locationId => async dispatch => {
   const res = await axios.get(`/api/locations/${locationId}/zones`);
 
   dispatch({ type: FETCH_LOCATION_ZONES, payload: res.data });
+};
+export const fetchZoneNodes = zoneId => async dispatch => {
+  const res = await axios.get(`/api/zones/${zoneId}/nodes`);
+  dispatch({ type: FETCH_ZONE_NODES, payload: res.data });
 };
 
 export const fetchSiteLocations = siteId => async dispatch => {
@@ -54,4 +66,15 @@ export const fetchLocationCharts = values => async dispatch => {
   );
 
   dispatch({ type: FETCH_LOCATION_CHARTS, payload: res.data });
+};
+
+export const fetchZoneBarChart = values => async dispatch => {
+  console.log('fetching zone charts');
+  const res = await axios.get(
+    `/conditions/zones/${values.zoneId}/?startTime=${
+      values.startTime
+    }&endTime=${values.endTime}`
+  );
+
+  dispatch({ type: FETCH_ZONE_CHARTS, payload: res.data });
 };

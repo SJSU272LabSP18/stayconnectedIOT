@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  fetchAllZones,
-  fetchLocationZone,
-  fetchLocationCharts
+  fetchAllNodes,
+  fetchZoneNodes,
+  fetchZoneBarChart
 } from '../../../actions';
-import _ from 'lodash';
+import { withRouter } from 'react-router-dom';
 import Barchart from '../../charts/Barchart';
+import _ from 'lodash';
 
-class Zones extends Component {
+class Nodes extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,25 +26,23 @@ class Zones extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props.match.params.locationId);
-    if (this.props.match.params.locationId) {
-      //Fetch zones under selected location
-      this.props
-        .fetchLocationZone(this.props.match.params.locationId)
-        .then(() => {
-          _.map(this.props.zones.rows, zone => {
-            this.setState({
-              rows: [...this.state.rows, zone]
-            });
+    if (this.props.match.params.zoneId) {
+      this.props.fetchZoneNodes(this.props.match.params.zoneId).then(() => {
+        _.map(this.props.nodes.rows, node => {
+          this.setState({
+            rows: [...this.state.rows, node]
           });
         });
+      });
+
       var values = {
-        locationId: this.props.match.params.locationId,
+        zoneId: this.props.match.params.zoneId,
         startTime: '2018-01-28',
         endTime: '2018-12-28'
       };
+
       //fetch charts based for given  location
-      this.props.fetchLocationCharts(values).then(() => {
+      this.props.fetchZoneBarChart(values).then(() => {
         var chartData = this.props.charts.rows[0];
         var array_keys = new Array();
         var array_values = new Array();
@@ -66,42 +65,45 @@ class Zones extends Component {
         });
       });
     } else {
-      this.props.fetchAllZones().then(() => {
-        _.map(this.props.zones.rows, zone => {
+      this.props.fetchAllNodes().then(() => {
+        _.map(this.props.nodes.rows, node => {
           this.setState({
-            rows: [...this.state.rows, zone]
+            rows: [...this.state.rows, node]
           });
         });
       });
     }
   }
-  onDetailClick(zoneId) {
-    this.props.history.push('/dashboard/zones/' + zoneId + '/nodes');
+  onDetailClick(nodeId) {
+    console.log('Node detail clicked');
+    //this.props.history.push('/dashboard/' + nodeId + '/locations');
   }
-  renderZones() {
-    return _.map(this.state.rows, zone => {
+  renderNodes() {
+    return _.map(this.state.rows, node => {
       return (
-        <div className="col-md-3" key={zone.zone_id}>
+        <div className="col-md-3" key={node.node_id}>
           <div className="card ">
             <div className="header">
-              <h4 className="title">{zone.zone_name}</h4>
-              <p>Location Id: {zone.location_id}</p>
+              <h4 className="title">{node.node_name}</h4>
             </div>
             <div className="content">
               <div className="footer">
                 <div className="legend">
                   <i className="fa fa-circle text-info" /> ID:{' '}
-                  {zone.zone_address}
+                  {node.node_address}
                   <br />
                   <i className="fa fa-circle text-danger" /> Address:{
-                    zone.zone_id
+                    node.node_id
                   }
+                  <br />
+                  <i className="fa fa-circle text-warning" /> Status:{' '}
+                  {node.status == 1 ? 'Active' : 'Inactive'}
                 </div>
                 <hr />
                 <div className="stats">
                   <button
                     className="btn btn-warning"
-                    onClick={this.onDetailClick.bind(this, zone.zone_id)}
+                    onClick={this.onDetailClick.bind(this, node.node_id)}
                   >
                     Details
                   </button>
@@ -113,8 +115,7 @@ class Zones extends Component {
       );
     });
   }
-
-  renderChart() {
+  renderBarChart() {
     console.log(this.state.avgConsumption);
     return (
       <div className="col-md-12">
@@ -125,7 +126,7 @@ class Zones extends Component {
             <div className="card">
               <div className="header">
                 <h4 className="title">Average Data Feed</h4>
-                <p className="category">Locations</p>
+                <p className="category">Zones</p>
               </div>
               <div className="content">
                 <div id="chartHours" className="ct-chart">
@@ -145,46 +146,24 @@ class Zones extends Component {
     );
   }
 
-  renderResistance() {
-    return (
-      <div className="col-md-6">
-        <div className="card ">
-          <div className="header">
-            <h4 className="title">Average Power Consumption</h4>
-            <p className="category" />
-          </div>
-          <div className="content">
-            <div id="chartActivity" className="ct-chart" />
-
-            <div className="footer">
-              <div className="legend" />
-              <hr />
-              <div className="stats" />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
   render() {
     return (
       <div>
-        <h1> Zones</h1>
-
+        <h1> Nodes</h1>
         <div className="row">
-          {this.renderZones()}
-          {this.renderChart()}
+          {this.renderNodes()}
+          {this.renderBarChart()}
         </div>
       </div>
     );
   }
 }
-function mapStateToProps({ zones, charts }) {
-  return { zones, charts };
+function mapStateToProps({ nodes, charts }) {
+  console.log('charts', charts);
+  return { nodes, charts };
 }
-
 export default connect(mapStateToProps, {
-  fetchAllZones,
-  fetchLocationZone,
-  fetchLocationCharts
-})(Zones);
+  fetchAllNodes,
+  fetchZoneNodes,
+  fetchZoneBarChart
+})(withRouter(Nodes));

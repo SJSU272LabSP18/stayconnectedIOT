@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Zones from './Zones/Zones';
 import LocationView from './Location';
 import Sites from './Sites/Sites';
+import Nodes from './Nodes/Nodes';
 import Locations from './Locations/Locations';
 import Navbar from '../Navbar/Navbar';
 import Header from '../Header';
@@ -33,6 +34,12 @@ class Dashboard extends Component {
                   path="/dashboard/locations"
                   component={Locations}
                 />
+                <Route
+                  exact
+                  path="/dashboard/zones/:zoneId/nodes"
+                  component={Nodes}
+                />
+                <Route exact path="/dashboard/nodes" component={Nodes} />
               </div>
             </div>
           </div>
