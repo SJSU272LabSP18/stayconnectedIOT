@@ -1,45 +1,43 @@
-var Postgress = require('../db');
+var Postgress = require('../db/db');
+var express = require('express');
+var router = express.Router();
 
-module.exports = app => {
-  app.get('/api/nodes', (req, res) => {
+router.get('/', (req, res) => {
     const sql = 'Select * FROM site_ops.node';
-    Postgress.fetchData(function(error, results) {
-      if (error) {
-        res.status(401).send({ message: 'Error getting All Nodes' });
-        return;
-      } else {
-        res.status(200).send(results);
-      }
+    Postgress.fetchData(function (error, results) {
+        if (error) {
+            res.status(401).send({message: 'Error getting All Nodes'});
+        } else {
+            res.status(200).send(results.rows);
+        }
     }, sql);
-  });
-  app.get('/api/nodes/:nodeId', (req, res) => {
+});
+router.get('/:nodeId', (req, res) => {
     const siteId = req.params.nodeId;
     const sql =
-      'Select * FROM site_ops.node where site_ops.node.node_id=' + siteId;
-    Postgress.fetchData(function(error, results) {
-      if (error) {
-        res.status(401).send({ message: 'Error getting All Nodes' });
-        return;
-      } else {
-        res.status(200).send(results);
-      }
-    }, sql);
-  });
-
-  app.get(
-    '/conditions/:nodeId/?startTime=:startTime&endTime=:endTime',
-    (req, res) => {
-      const siteId = req.params.nodeId;
-      const sql =
         'Select * FROM site_ops.node where site_ops.node.node_id=' + siteId;
-      Postgress.fetchData(function(error, results) {
+    Postgress.fetchData(function (error, results) {
         if (error) {
-          res.status(401).send({ message: 'Error getting All Nodes' });
-          return;
+            res.status(401).send({message: 'Error getting All Nodes'});
         } else {
-          res.status(200).send(results);
+            res.status(200).send(results.rows);
         }
-      }, sql);
+    }, sql);
+});
+
+router.get('/:nodeId/?startTime=:startTime&endTime=:endTime',
+    (req, res) => {
+        const siteId = req.params.nodeId;
+        const sql =
+            'Select * FROM site_ops.node where site_ops.node.node_id=' + siteId;
+        Postgress.fetchData(function (error, results) {
+            if (error) {
+                res.status(401).send({message: 'Error getting All Nodes'});
+            } else {
+                res.status(200).send(results.rows);
+            }
+        }, sql);
     }
-  );
-};
+);
+
+module.exports = router;

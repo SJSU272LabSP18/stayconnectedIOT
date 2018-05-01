@@ -1,6 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-var Postgress = require('../db');
+var Postgress = require('../db/db');
 const keys = require('../config/keys');
 
 passport.serializeUser((user, done) => {
@@ -10,9 +10,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   var sql = 'Select * FROM site_ops.user where site_ops.user.user_id=' + id;
   Postgress.fetchData(function(error, results) {
-    if (error) {
-      return;
-    } else {
+    if (!error) {
       done(null, results);
     }
   }, sql);
