@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   FETCH_USER,
   FETCH_SITES,
@@ -9,8 +10,10 @@ import {
   FETCH_ZONE_NODES,
   FETCH_LOCATION_CHARTS,
   FETCH_ZONE_CHARTS,
-  FETCH_NODES
+  FETCH_NODES,
+  FETCH_USER_LOGIN
 } from './types';
+
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get('/api/current_user');
@@ -50,7 +53,7 @@ export const fetchZoneNodes = zoneId => async dispatch => {
   const res = await axios.get(`/api/zones/${zoneId}/nodes`);
   dispatch({ type: FETCH_ZONE_NODES, payload: res.data });
 };
-
+//http://localhost:5000/api/sites/1
 export const fetchSiteLocations = siteId => async dispatch => {
   const res = await axios.get(`/api/sites/${siteId}/locations`);
 
@@ -77,4 +80,13 @@ export const fetchZoneBarChart = values => async dispatch => {
   );
 
   dispatch({ type: FETCH_ZONE_CHARTS, payload: res.data });
+};
+
+
+export const fetchLogin = accessToken => async dispatch => {
+    console.log('fetching user login info' +accessToken);
+    const res = await axios.get(
+        `api/users` , { headers: {"Authorization" : `Bearer ${accessToken}`} }
+    );
+    dispatch({ type: FETCH_USER_LOGIN, payload: res.data });
 };
