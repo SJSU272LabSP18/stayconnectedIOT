@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import imagine from '../../assets/img/sidebar-3.jpg';
+import React, {Component} from "react";
+import imagine from "../../assets/img/sidebar-3.jpg";
 
 class Navbar extends Component {
   render() {
