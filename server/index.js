@@ -5,6 +5,7 @@ const cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 const passport = require('passport');
 const keys = require('./config/keys');
+
 const app = express();
 const http = require('http');
 const cors = require('cors');
@@ -44,3 +45,5 @@ app.listen(PORT, () => {
 // server.listen(SOCKET_PORT, function() {
 //   console.log('listening on socket port ', SOCKET_PORT);
 // });
+
+module.exports.app = app;
