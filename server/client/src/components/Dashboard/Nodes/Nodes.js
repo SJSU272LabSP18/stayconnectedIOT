@@ -26,7 +26,7 @@ class Nodes extends Component {
   componentDidMount() {
     if (this.props.match.params.zoneId) {
       this.props.fetchZoneNodes(this.props.match.params.zoneId).then(() => {
-        _.map(this.props.nodes.rows, node => {
+        _.map(this.props.nodes, node => {
           this.setState({
             rows: [...this.state.rows, node]
           });
@@ -65,7 +65,7 @@ class Nodes extends Component {
       });
     } else {
       this.props.fetchAllNodes().then(() => {
-        _.map(this.props.nodes.rows, node => {
+        _.map(this.props.nodes, node => {
           this.setState({
             rows: [...this.state.rows, node]
           });
