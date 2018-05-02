@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {
-  fetchAllNodes,
-  fetchZoneNodes,
-  fetchZoneBarChart
-} from '../../../actions';
-import { withRouter } from 'react-router-dom';
-import Barchart from '../../charts/Barchart';
-import _ from 'lodash';
-import { subscribeToData } from './test';
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {fetchAllNodes, fetchZoneNodes, fetchZoneBarChart} from "../../../actions";
+import {withRouter} from "react-router-dom";
+import Barchart from "../../charts/Barchart";
+import _ from "lodash";
+import {subscribeToData} from "./socket";
 
 class Nodes extends Component {
   constructor(props) {
@@ -22,19 +18,10 @@ class Nodes extends Component {
         'rgba(255, 99, 132, 0.6)'
       ],
       rows: [],
-    //  humiditys: [],
       showCharts: true,
       avgConsumption: {}
     };
-
-    subscribeToData((err, object) => this.setState({
-    node_id : object.node_id,
-    temp : object.temperature,
-    humidity : object.humidity
-    }));
   }
-
-
 
   componentDidMount() {
     if (this.props.match.params.zoneId) {
@@ -56,8 +43,8 @@ class Nodes extends Component {
       //fetch charts based for given  location
       this.props.fetchZoneBarChart(values).then(() => {
         var chartData = this.props.charts.rows[0];
-        var array_keys = new Array();
-        var array_values = new Array();
+        var array_keys = [];
+        var array_values = [];
 
         for (var key in chartData) {
           array_keys.push(key);
@@ -82,10 +69,29 @@ class Nodes extends Component {
           this.setState({
             rows: [...this.state.rows, node]
           });
+
+          subscribeToData(node.node_id, (err, data) => {
+            this.socketUpdate(data);
+          });
         });
       });
     }
   }
+
+  socketUpdate(data) {
+    console.log('Node Update: ', JSON.stringify(data));
+    let nodes = [...this.state.rows];
+    let nodeIndex = nodes.findIndex(node => node.node_id == data.node_id);
+    nodes[nodeIndex].temperature = data.temperature;
+    nodes[nodeIndex].humidity = data.humidity;
+    console.log('Node: ', JSON.stringify(nodes[nodeIndex]));
+    this.setState({nodes});
+  }
+
+  componentWillUnmount() {
+
+  }
+
   onDetailClick(nodeId) {
     console.log('Node detail clicked');
     //this.props.history.push('/dashboard/' + nodeId + '/locations');
@@ -104,21 +110,18 @@ class Nodes extends Component {
                   <i className="fa fa-circle text-info" /> ID:{' '}
                   {node.node_address}
                   <br />
-                  <i className="fa fa-circle text-danger" /> Address:{
-                    node.node_id
-                  }
+                  <i className="fa fa-circle text-danger" /> Address:{''}
+                  {node.node_id}
                   <br />
                   <i className="fa fa-circle text-warning" /> Status:{' '}
                   {node.status == 1 ? 'Active' : 'Inactive'}
                   <br />
                   <i className="fa fa-circle text-info" /> Temperature:{' '}
-                    {node.node_id == this.state.node_id ?
-                      this.state.temp : node.temp}
+                    {node.temperature}
 
                   <br />
                   <i className="fa fa-circle text-danger" /> Humidity:{' '}
-                    {node.node_id == this.state.node_id ?
-                      this.state.humidity : node.humidity}
+                    {node.humidity}
 
                 </div>
                 <hr />
