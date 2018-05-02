@@ -17,6 +17,7 @@ Socket.prototype.setSocketIO = function (_io) {
 
     socket.on(appConfig.SensorEvents.NODE_EVENT, function (data) {
       appEvents.emit(appConfig.SensorEvents.NODE_EVENT, data);
+      update(data);
     });
 
     socket.on(appConfig.SensorEvents.ZONE_EVENT, function (data) {
@@ -33,6 +34,10 @@ Socket.prototype.setSocketIO = function (_io) {
     });
   });
 };
+
+function update(msg){
+ io.emit(msg.node_id, msg);
+}
 
 appEvents.on(appConfig.SensorEvents.NODE_EVENT, function(data) {
   io.emit(appConfig.SensorEvents.NODE_EVENT, data);

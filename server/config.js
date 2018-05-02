@@ -2,7 +2,7 @@ var appConfig = {};
 
 appConfig.SensorEvents = {
   LOCATION_EVENT: 'LOCATION_EVENT',
-  NODE_EVENT: 'NODE_EVENT',
+  NODE_EVENT: 'sensor_data',
   ZONE_EVENT: 'ZONE_EVENT'
 };
 
