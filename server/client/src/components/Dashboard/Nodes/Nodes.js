@@ -8,6 +8,7 @@ import {
 import { withRouter } from 'react-router-dom';
 import Barchart from '../../charts/Barchart';
 import _ from 'lodash';
+import { subscribeToData } from './test';
 
 class Nodes extends Component {
   constructor(props) {
@@ -21,10 +22,20 @@ class Nodes extends Component {
         'rgba(255, 99, 132, 0.6)'
       ],
       rows: [],
+    //  humiditys: [],
       showCharts: true,
       avgConsumption: {}
     };
+
+    subscribeToData((err, object) => this.setState({
+    node_id : object.node_id,
+    temp : object.temperature,
+    humidity : object.humidity
+    }));
   }
+
+
+
   componentDidMount() {
     if (this.props.match.params.zoneId) {
       this.props.fetchZoneNodes(this.props.match.params.zoneId).then(() => {
@@ -32,6 +43,7 @@ class Nodes extends Component {
           this.setState({
             rows: [...this.state.rows, node]
           });
+
         });
       });
 
@@ -98,6 +110,16 @@ class Nodes extends Component {
                   <br />
                   <i className="fa fa-circle text-warning" /> Status:{' '}
                   {node.status == 1 ? 'Active' : 'Inactive'}
+                  <br />
+                  <i className="fa fa-circle text-info" /> Temperature:{' '}
+                    {node.node_id == this.state.node_id ?
+                      this.state.temp : node.temp}
+
+                  <br />
+                  <i className="fa fa-circle text-danger" /> Humidity:{' '}
+                    {node.node_id == this.state.node_id ?
+                      this.state.humidity : node.humidity}
+
                 </div>
                 <hr />
                 <div className="stats">
