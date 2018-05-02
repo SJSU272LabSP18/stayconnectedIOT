@@ -26,7 +26,7 @@ class Sites extends Component {
   renderSites() {
     return _.map(this.state.rows, site => {
       return (
-        <div className="col-md-3" key={site.site_id}>
+        <div className="col-md-3" key={site.site_id} id={site.site_id}>
           <div className="card ">
             <div className="header">
               <h4 className="title">{site.site_name}</h4>
