@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const  socket = io('http://localhost:8000');
+const  socket = io('http://localhost:5000');
 var connected = false;
 
 socket.on('connect', function() {

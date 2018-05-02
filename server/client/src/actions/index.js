@@ -13,7 +13,7 @@ import {
 } from './types';
 
 export const fetchUser = () => async dispatch => {
-  const res = await axios.get('/api/current_user');
+  const res = await axios.get('/api/users');
 
   dispatch({ type: FETCH_USER, payload: res.data });
 };
@@ -26,7 +26,7 @@ export const fetchAllSites = () => async dispatch => {
 
 export const fetchAllLocations = () => async dispatch => {
   const res = await axios.get('/api/locations');
-
+  console.log('Location Data' + JSON.stringify(res.data));
   dispatch({ type: FETCH_LOCATIONS, payload: res.data });
 };
 

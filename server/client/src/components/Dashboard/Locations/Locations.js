@@ -23,7 +23,8 @@ class Locations extends Component {
       });
     } else {
       this.props.fetchAllLocations().then(() => {
-        _.map(this.props.locations.rows, location => {
+        console.log('All Locations: ' + JSON.stringify(this.props.locations));
+        _.map(this.props.locations, location => {
           this.setState({
             rows: [...this.state.rows, location]
           });

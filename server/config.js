@@ -1,9 +1,14 @@
 var appConfig = {};
 
-appConfig.Events = {
+appConfig.SensorEvents = {
   LOCATION_EVENT: 'LOCATION_EVENT',
-  NODE_EVENT: 'NODE_EVENT',
+  NODE_EVENT: 'sensor_data',
   ZONE_EVENT: 'ZONE_EVENT'
+};
+
+appConfig.SocketEvents = {
+  CONNECTION: 'connection',
+  DISCONNECTED: 'disconnect'
 };
 
 module.exports = appConfig;

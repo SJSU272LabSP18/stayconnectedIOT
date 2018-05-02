@@ -31,7 +31,7 @@ class Zones extends Component {
       this.props
         .fetchLocationZone(this.props.match.params.locationId)
         .then(() => {
-          _.map(this.props.zones.rows, zone => {
+          _.map(this.props.zones, zone => {
             this.setState({
               rows: [...this.state.rows, zone]
             });
@@ -67,7 +67,7 @@ class Zones extends Component {
       });
     } else {
       this.props.fetchAllZones().then(() => {
-        _.map(this.props.zones.rows, zone => {
+        _.map(this.props.zones, zone => {
           this.setState({
             rows: [...this.state.rows, zone]
           });

@@ -12,7 +12,7 @@ class Sites extends Component {
   }
   componentDidMount() {
     this.props.fetchAllSites().then(() => {
-      _.map(this.props.sites.rows, site => {
+      _.map(this.props.sites, site => {
         this.setState({
           rows: [...this.state.rows, site]
         });
