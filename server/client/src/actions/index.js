@@ -60,7 +60,7 @@ export const fetchSiteLocations = siteId => async dispatch => {
 export const fetchLocationCharts = values => async dispatch => {
   console.log('fetching location charts');
   const res = await axios.get(
-    `/conditions/locations/${values.locationId}/?startTime=${
+    `/api/locations/${values.locationId}/conditions/?startTime=${
       values.startTime
     }&endTime=${values.endTime}`
   );
@@ -69,12 +69,11 @@ export const fetchLocationCharts = values => async dispatch => {
 };
 
 export const fetchZoneBarChart = values => async dispatch => {
-  console.log('fetching zone charts');
   const res = await axios.get(
-    `/conditions/zones/${values.zoneId}/?startTime=${
+    `/api/zones/${values.zoneId}/conditions/?startTime=${
       values.startTime
     }&endTime=${values.endTime}`
   );
-
+  console.log('fetching zone charts', res);
   dispatch({ type: FETCH_ZONE_CHARTS, payload: res.data });
 };

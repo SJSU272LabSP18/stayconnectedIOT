@@ -42,7 +42,7 @@ class Nodes extends Component {
 
       //fetch charts based for given  location
       this.props.fetchZoneBarChart(values).then(() => {
-        var chartData = this.props.charts.rows[0];
+        var chartData = this.props.charts[0];
         var array_keys = [];
         var array_values = [];
 
@@ -114,14 +114,14 @@ class Nodes extends Component {
                   {node.node_id}
                   <br />
                   <i className="fa fa-circle text-warning" /> Status:{' '}
-                  {node.status == 1 ? 'Active' : 'Inactive'}
+                  {node.temperature != null && node.humidity != null ? 'Active' : 'Inactive'}
                   <br />
                   <i className="fa fa-circle text-info" /> Temperature:{' '}
-                    {node.temperature}
+                    {node.temperature != null ? node.temperature : 'NA'}
 
                   <br />
                   <i className="fa fa-circle text-danger" /> Humidity:{' '}
-                    {node.humidity}
+                    {node.humidity != null ? node.humidity : 'NA'}
 
                 </div>
                 <hr />

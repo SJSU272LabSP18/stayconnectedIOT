@@ -15,7 +15,7 @@ class Locations extends Component {
 
     if (this.props.match.params.siteId) {
       this.props.fetchSiteLocations(this.props.match.params.siteId).then(() => {
-        _.map(this.props.locations.rows, location => {
+        _.map(this.props.locations, location => {
           this.setState({
             rows: [...this.state.rows, location]
           });
