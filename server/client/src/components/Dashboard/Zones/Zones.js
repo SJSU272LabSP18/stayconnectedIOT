@@ -44,7 +44,7 @@ class Zones extends Component {
       };
       //fetch charts based for given  location
       this.props.fetchLocationCharts(values).then(() => {
-        var chartData = this.props.charts.rows[0];
+        var chartData = this.props.charts[0];
         var array_keys = new Array();
         var array_values = new Array();
 
@@ -180,6 +180,7 @@ class Zones extends Component {
   }
 }
 function mapStateToProps({ zones, charts }) {
+  console.log(charts);
   return { zones, charts };
 }
 

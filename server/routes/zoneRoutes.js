@@ -41,7 +41,7 @@ router.get('/:zoneId/nodes', (req, res) => {
     }, sql);
 });
 
-router.get('/:zoneId', (req, res) => {
+router.get('/:zoneId/conditions', (req, res) => {
     const zoneId = req.params.zoneId;
     const startTime = req.query.startTime;
     const endTime = req.query.endTime;
@@ -64,6 +64,7 @@ router.get('/:zoneId', (req, res) => {
         "'";
 
     Postgress.fetchData(function (error, results) {
+      console.log('Zone Data for Graph: ', results);
         if (error) {
             res.status(401).send({message: 'Error getting All Nodes'});
         } else {
