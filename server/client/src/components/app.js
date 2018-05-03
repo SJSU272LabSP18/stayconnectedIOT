@@ -6,6 +6,7 @@ import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import Footer from './Footer/Footer';
+import Login from './Login'
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
@@ -17,6 +18,7 @@ class App extends Component {
           <div className="container-fluid">
             <Header />
             <Route exact path="/" component={Landing} />
+              <Route exact path="/Login" component={Login} />
             <Dashboard />
             <Footer />
           </div>
