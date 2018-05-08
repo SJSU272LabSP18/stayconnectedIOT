@@ -1,14 +1,15 @@
 const { Pool } = require('pg');
+var config = require('../../configKeys');
 
 const pool = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-  max: process.env.PGMAXPOOL,
-  idleTimeoutMillis: process.env.PGIDLETIMEOUT,
-  connectionTimeoutMillis: process.env.PGCONNECTIONTIMEOUT
+  user: process.env.PGUSER || config.PgressUser,
+  host: process.env.PGHOST || config.PgressHost,
+  database: process.env.PGDATABASE || config.PgressDB,
+  password: process.env.PGPASSWORD || config.PgressPassword,
+  port: process.env.PGPORT || config.PgressPort,
+  max: process.env.PGMAXPOOL || 10,
+  idleTimeoutMillis: process.env.PGIDLETIMEOUT || 30000,
+  connectionTimeoutMillis: process.env.PGCONNECTIONTIMEOUT || 10000
 });
 
 exports.execQuery = (callback, sqlQuery) => {
