@@ -1,30 +1,25 @@
 const { Pool } = require('pg');
-const keys = require('../config/keys');
 
-function getConnection() {
-  const pool = new Pool({
-    user: keys.PgressUser,
-    host: keys.PgressHost,
-    database: keys.PgressDB,
-    password: keys.PgressPassword,
-    port: keys.PgressPort
-  });
-  return pool;
-}
+const pool = new Pool({
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
+  max: process.env.PGMAXPOOL,
+  idleTimeoutMillis: process.env.PGIDLETIMEOUT,
+  connectionTimeoutMillis: process.env.PGCONNECTIONTIMEOUT
+});
 
-exports.fetchData = (callback, sqlQuery) => {
-  console.log('\nSQL Query:: ' + sqlQuery);
-  var connection = getConnection();
-  console.log('Fetch Data');
-  connection.query(sqlQuery, function(err, rows, fields) {
-    if (err) {
-      console.log('ERROR: ' + err.message);
-    } else {
-      // return err or result
-      console.log('DB Results:' + JSON.stringify(rows));
-    }
-    callback(err, rows);
-    connection.end();
+exports.execQuery = (callback, sqlQuery) => {
+  pool.connect((err, client, release) => {
+    client.query(sqlQuery, function(err, result) {
+      release();
+      callback(err, result);
+    });
   });
-  console.log('\nConnection closed..');
 };
+
+function closeConnection() {
+  pool.end().then(() => console.log('\nConnection closed and Pools ended..'));
+}

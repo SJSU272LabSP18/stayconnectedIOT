@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.get('/', (req, res) => {
     const sql = 'Select * FROM site_ops.location';
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res.status(401).send({
                 message: 'Error getting specific location for a given site'
@@ -24,7 +24,7 @@ router.post('/:locationId', (req, res) => {
     } else {
         console.log('location info not available', location);
     }
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res.status(401).send({message: 'Error getting All Locations'});
         } else {
@@ -37,7 +37,7 @@ router.get('/:locationId/zones', (req, res) => {
     const locationId = req.params.locationId;
     const sql =
         'SELECT * FROM site_ops.zone WHERE zone.location_id = ' + locationId;
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res.status(401).send({message: 'Error getting All Locations'});
         } else {
@@ -70,7 +70,7 @@ router.get('/:locationId/conditions', (req, res) => {
         endTime +
         "'";
 
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res.status(401).send({message: 'Error getting All Nodes'});
         } else {
