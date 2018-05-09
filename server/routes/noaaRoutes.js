@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
     }
   };
   request(config, function (error, response, body) {
-    //var result = body.results[0].value;
     console.log(JSON.stringify(body));
     var result = JSON.parse(body);
     res.send(result.results);
@@ -22,9 +21,11 @@ router.get('/', (req, res) => {
 
 router.get('/:stationId', (req, res) => {
   var stationId = req.params.stationId;
-  var startdate = req.query.date;
-  console.log(startdate);
-  if(startdate == null){
+  var date = req.query.date;
+  var startDate = req.query.startdate;
+  var endDate = req.query.enddate;
+  console.log(startDate);
+  if(startDate == null && date == null){
     var config = {
       url: 'https://www.ncdc.noaa.gov/cdo-web/api/v2/stations/' + stationId,
       headers: {
@@ -32,8 +33,17 @@ router.get('/:stationId', (req, res) => {
       }
     };
 
-  } else{
-    var condition = '&datatypeid=TOBS&startdate='+startdate+'&enddate='+startdate+'&units=metric';
+  } else if(startDate == null && date != null){
+    var condition = '&datatypeid=TOBS&startdate='+date+'&enddate='+date+'&units=metric';
+    var station_cond = '&stationid=' + stationId;
+    var config = {
+      url: 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND' + station_cond + condition,
+      headers: {
+        'Token': token
+      }
+    };
+  }else{
+    var condition = '&datatypeid=TOBS&startdate='+startDate+'&enddate='+endDate+'&units=metric';
     var station_cond = '&stationid=' + stationId;
     var config = {
       url: 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND' + station_cond + condition,
@@ -44,7 +54,6 @@ router.get('/:stationId', (req, res) => {
   }
 
   request(config, function (error, response, body) {
-    //var result = body.results[0].value;
     console.log(JSON.stringify(body));
     var result = JSON.parse(body);
     var data;
