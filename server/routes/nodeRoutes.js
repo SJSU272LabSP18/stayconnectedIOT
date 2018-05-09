@@ -6,19 +6,36 @@ router.get('/', (req, res) => {
     const sql = 'Select * FROM site_ops.node';
     Postgress.execQuery(function (error, results) {
         if (error) {
-            res.status(401).send({message: 'Error getting All Nodes'});
+            res.status(400).send({message: 'Error getting All Nodes'});
         } else {
             res.status(200).send(results.rows);
         }
     }, sql);
 });
+
+router.post('/', (req, res) => {
+    const query = {
+        text: 'INSERT INTO site_ops.node(node_id, node_address, zone_id, node_name, status)'
+        + ' VALUES ($1, $2, $3, $4, $5)',
+        values: [req.body.node_id, req.body.node_address, req.body.zone_id, req.body.node_name, req.body.status],
+    };
+
+    Postgress.execQuery(function (error, results) {
+        if (error) {
+            res.status(400).send({message: 'Error adding Node'});
+        } else {
+            res.status(200).send(results.rows);
+        }
+    }, query);
+});
+
 router.get('/:nodeId', (req, res) => {
     const nodeId = req.params.nodeId;
     const sql = 'Select * FROM site_ops.node where site_ops.node.node_id=' + nodeId;
     console.log(sql);
     Postgress.execQuery(function (error, results) {
         if (error) {
-            res.status(401).send({message: 'Error getting All Nodes'});
+            res.status(400).send({message: 'Error getting Node'});
         } else {
             res.status(200).send(results.rows);
         }
@@ -33,7 +50,7 @@ router.get('/:nodeId/conditions?startTime=:startTime&endTime=:endTime',
         const sql = 'Select * FROM site_ops.node where site_ops.node.node_id=' + nodeId;
         Postgress.execQuery(function (error, results) {
             if (error) {
-                res.status(401).send({message: 'Error getting All Nodes'});
+                res.status(400).send({message: 'Error getting Node data'});
             } else {
                 res.status(200).send(results.rows);
             }
@@ -53,7 +70,7 @@ router.post('/:nodeId/conditions',
 
         Postgress.execQuery(function (error, results) {
             if (error) {
-                res.status(401).send({message: 'Error getting All Nodes'});
+                res.status(400).send({message: 'Error getting Node conditions'});
             } else {
                 res.status(200).send(results.rows);
             }
