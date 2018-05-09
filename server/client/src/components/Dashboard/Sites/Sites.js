@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {fetchAllSites} from "../../../actions";
 import {withRouter} from "react-router-dom";
 import _ from "lodash";
+import {FetchRemoteData} from "../../../actions";
 class Sites extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +12,7 @@ class Sites extends Component {
     };
   }
   componentDidMount() {
+
     this.props.fetchAllSites().then(() => {
       _.map(this.props.sites, site => {
         this.setState({
@@ -21,6 +23,8 @@ class Sites extends Component {
   }
   onDetailClick(siteId) {
     console.log(siteId);
+    this.props.FetchRemoteData();
+  //  console.log('remote data fetched');
     this.props.history.push('/dashboard/' + siteId + '/locations');
   }
   renderSites() {
@@ -70,4 +74,4 @@ function mapStateToProps({ sites }) {
   console.log(sites);
   return { sites };
 }
-export default connect(mapStateToProps, { fetchAllSites })(withRouter(Sites));
+export default connect(mapStateToProps, { fetchAllSites, FetchRemoteData })(withRouter(Sites));

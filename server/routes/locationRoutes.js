@@ -1,8 +1,17 @@
 var Postgress = require('../db/db');
 var express = require('express');
 var router = express.Router();
+var $ = require('jquery');
+
+var baseURL = 'https://www.ncdc.noaa.gov/cdo-web/api/v2';
+var condition = '/data?datasetid=GHCND&datatypeid=TAVG&locationcategoryid=95051&startdate=2018-05-01&enddate=2018-05-01&units=metric';
+var condition1 = 'data?datasetid=GHCND&stationid=GHCND:USW00013872&datatypeid=TOBS&startdate=2010-05-01&enddate=2010-05-01&units=metric';
+var key = 'EhzyTdGyXfiqTVYCoPXfWmBxlFSGVLof';
+
 
 router.get('/', (req, res) => {
+    //setInterval(FetchRemoteData, 30000);
+
     const sql = 'Select * FROM site_ops.location';
     Postgress.fetchData(function (error, results) {
         if (error) {
@@ -13,6 +22,7 @@ router.get('/', (req, res) => {
             res.status(200).send(results.rows);
         }
     }, sql);
+    FetchRemoteData();
 });
 
 router.post('/:locationId', (req, res) => {
@@ -78,5 +88,66 @@ router.get('/:locationId/conditions', (req, res) => {
         }
     }, sql);
 });
+
+
+
+function FetchRemoteData(){
+  $.ajax({ url:baseURL+condition, headers:{ token:key },
+    success: function(result){
+      console.log("successfully get here");
+      console.log(result);
+      var output = result.results[0].value;
+      console.log(output);
+    }
+  });
+}
+//var filter = '?locationcategoryid=ST&limit=52';
+/*
+var http = require('http');
+
+function FetchRemoteData(){
+var options = {
+  host: baseURL+condition,
+  path: '/',
+  //This is the only line that is new. `headers` is an object with the headers to request
+  headers: {token:key}
+};
+
+callback = function(response) {
+  var str = ''
+  response.on('data', function (chunk) {
+    str += chunk;
+  });
+
+  response.on('end', function () {
+    console.log(str);
+  });
+
+  response.on('error', function (e) {
+    console.log(e.message);
+  });
+
+}
+
+var req = http.request(options, callback);
+req.end();
+
+/*
+ const request = require(‘request’);
+request(‘https://api.locatemap.in/userId/detail?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
+if (err) { return console.log(err); }
+console.log(body.url);
+console.log(body.explanation);
+});
+  $.ajax({ url:baseURL+condition, headers:{ token:key },
+    success: function(result){
+      console.log(result);
+      var output = result.results[0].value;
+      console.log(output);
+    }
+  });*/
+//}
+
+
 
 module.exports = router;

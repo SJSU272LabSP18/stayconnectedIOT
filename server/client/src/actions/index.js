@@ -9,8 +9,17 @@ import {
   FETCH_ZONE_NODES,
   FETCH_LOCATION_CHARTS,
   FETCH_ZONE_CHARTS,
-  FETCH_NODES
+  FETCH_NODES,
+  FETCH_REMOTEDATA
 } from './types';
+
+export const FetchRemoteData = () => async dispatch => {
+  console.log('testing start');
+  const res = await axios.get('/api/data');
+  dispatch({ type: FETCH_REMOTEDATA, payload: res.data });
+  console.log(res.data);
+
+}
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get('/api/users');
