@@ -1,5 +1,5 @@
 const request = require('supertest');
-var app = require('../index').app;
+var app = require('../app').app;
 
 /*Checking the status code's for the api's
 Ensure they are returning status 200 ok.

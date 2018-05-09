@@ -1,9 +1,8 @@
-var Postgress = require('../db/db');
-var express = require('express');
-var router = express.Router();
+const Postgress = require('../db/db');
+const express = require('express');
+const router = express.Router();
 
 router.get('/', (req, res) => {
-    console.log('Here to get the sites');
     const sql = 'Select * FROM site_ops.site';
     Postgress.execQuery(function (error, results) {
         if (error) {
