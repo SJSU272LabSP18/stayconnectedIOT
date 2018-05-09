@@ -2,29 +2,26 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-//  "proxy": {
-//    "/auth/google": {
-//      "target": "http://localhost:5000"
-//    },
-//    "/api/*": {
-//      "target": "http://192.168.43.47:5000"
-//    },
-//    "/conditions/*": {
-//      "target": "http://localhost:5000"
-//    }
-//  },
+  "proxy": {
+    "/api/*": {
+      "target": "http://localhost:5000"
+    },
+    "/conditions/*": {
+      "target": "http://localhost:5000"
+    }
+  },
   "dependencies": {
     "axios": "^0.17.1",
     "bootstrap": "^4.1.0",
     "chart.js": "^2.7.2",
     "css-loader": "^0.28.11",
     "firebase": "^4.13.1",
-    "firebaseui": "^2.7.0",
     "lodash": "^4.17.10",
     "materialize-css": "^0.100.2",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-chartjs-2": "^2.7.0",
+    "react-cookies": "^0.1.0",
     "react-dom": "^16.2.0",
     "react-icons-kit": "^1.0.7",
     "react-redux": "^5.0.7",
@@ -34,13 +31,16 @@
     "reactstrap": "^5.0.0",
     "redux": "^3.7.2",
     "redux-form": "^7.2.3",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.9.1",
+    "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0",
     "socket.io-client": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "mocha **/*.test.js",
     "eject": "react-scripts eject"
   }
 }

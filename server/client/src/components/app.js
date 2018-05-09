@@ -6,11 +6,9 @@ import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import Footer from './Footer/Footer';
-import Login from './Login'
+import Login from './Login';
+
 class App extends Component {
-  componentDidMount() {
-    this.props.fetchUser();
-  }
   render() {
     return (
       <div>

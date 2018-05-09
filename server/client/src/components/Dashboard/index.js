@@ -8,7 +8,29 @@ import Nodes from './Nodes/Nodes';
 import Locations from './Locations/Locations';
 import Navbar from '../Navbar/Navbar';
 import Header from '../Header';
+import * as firebase from "../firebase";
+import cookie from 'react-cookies'
+
 class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            authUser: false,
+        };
+    }
+
+    componentDidMount() {
+        this.setState({
+            authUser: cookie.load('isLoggedIn')
+        })
+        console.log('cookie index ' +this.state.authUser);
+        // firebase.auth.onAuthStateChanged(authUser => {
+        //     authUser
+        //         ? this.setState(() => ({ authUser :true }))
+        //         : this.setState(() => ({ authUser: false }));
+        // });
+    }
+
   render() {
     return (
       <div>
@@ -16,7 +38,7 @@ class Dashboard extends Component {
           <div>
             <div className="wrapper">
               <div className="main-panel">
-                <Navbar />
+                <Navbar authUser={this.state.authUser}/>
                 <Route exact path="/dashboard/sites" component={Sites} />
                 <Route exact path="/dashboard/zones" component={Zones} />
                 <Route

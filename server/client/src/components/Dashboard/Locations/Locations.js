@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { fetchAllLocations, fetchSiteLocations } from '../../../actions';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
+import Landing from "../../Landing"
+
 class Locations extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +17,7 @@ class Locations extends Component {
 
     if (this.props.match.params.siteId) {
       this.props.fetchSiteLocations(this.props.match.params.siteId).then(() => {
-        _.map(this.props.locations.rows, location => {
+        _.map(this.props.locations, location => {
           this.setState({
             rows: [...this.state.rows, location]
           });
@@ -23,7 +25,8 @@ class Locations extends Component {
       });
     } else {
       this.props.fetchAllLocations().then(() => {
-        _.map(this.props.locations.rows, location => {
+        console.log('All Locations: ' + JSON.stringify(this.props.locations));
+        _.map(this.props.locations, location => {
           this.setState({
             rows: [...this.state.rows, location]
           });
@@ -76,17 +79,22 @@ class Locations extends Component {
 
   renderSiteLocation() {}
   render() {
+      var auth=this.props.auth;
     return (
-      <div>
-        <h1>Locations</h1>
-        <div className="row">{this.renderLocations()}</div>
-      </div>
+        <div>
+            {auth?(<div>
+                <h1>Locations</h1>
+                <div className="row">{this.renderLocations()}</div>
+            </div>) : (<Landing/>) }
+
+        </div>
+
     );
   }
 }
-function mapStateToProps({ locations }) {
+function mapStateToProps({ locations, auth }) {
   console.log(locations);
-  return { locations };
+  return { locations, auth };
 }
 export default connect(mapStateToProps, {
   fetchAllLocations,

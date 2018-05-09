@@ -4,6 +4,7 @@ import {fetchAllNodes, fetchZoneNodes, fetchZoneBarChart} from "../../../actions
 import {withRouter} from "react-router-dom";
 import Barchart from "../../charts/Barchart";
 import _ from "lodash";
+import Landing from "../../Landing";
 import {subscribeToData} from "./socket";
 
 class Nodes extends Component {
@@ -26,7 +27,7 @@ class Nodes extends Component {
   componentDidMount() {
     if (this.props.match.params.zoneId) {
       this.props.fetchZoneNodes(this.props.match.params.zoneId).then(() => {
-        _.map(this.props.nodes.rows, node => {
+        _.map(this.props.nodes, node => {
           this.setState({
             rows: [...this.state.rows, node]
           });
@@ -42,7 +43,7 @@ class Nodes extends Component {
 
       //fetch charts based for given  location
       this.props.fetchZoneBarChart(values).then(() => {
-        var chartData = this.props.charts.rows[0];
+        var chartData = this.props.charts[0];
         var array_keys = [];
         var array_values = [];
 
@@ -65,7 +66,7 @@ class Nodes extends Component {
       });
     } else {
       this.props.fetchAllNodes().then(() => {
-        _.map(this.props.nodes.rows, node => {
+        _.map(this.props.nodes, node => {
           this.setState({
             rows: [...this.state.rows, node]
           });
@@ -114,14 +115,14 @@ class Nodes extends Component {
                   {node.node_id}
                   <br />
                   <i className="fa fa-circle text-warning" /> Status:{' '}
-                  {node.status == 1 ? 'Active' : 'Inactive'}
+                  {node.temperature != null && node.humidity != null ? 'Active' : 'Inactive'}
                   <br />
                   <i className="fa fa-circle text-info" /> Temperature:{' '}
-                    {node.temperature}
+                    {node.temperature != null ? node.temperature : 'NA'}
 
                   <br />
                   <i className="fa fa-circle text-danger" /> Humidity:{' '}
-                    {node.humidity}
+                    {node.humidity != null ? node.humidity : 'NA'}
 
                 </div>
                 <hr />
@@ -172,20 +173,25 @@ class Nodes extends Component {
   }
 
   render() {
+      var auth=this.props.auth;
     return (
-      <div>
-        <h1> Nodes</h1>
-        <div className="row">
-          {this.renderNodes()}
-          {this.renderBarChart()}
+        <div>
+            {auth?(<div>
+                <h1> Nodes</h1>
+                <div className="row">
+                    {this.renderNodes()}
+                    {this.renderBarChart()}
+                </div>
+            </div>) : (<Landing/>) }
+
         </div>
-      </div>
+
     );
   }
 }
-function mapStateToProps({ nodes, charts }) {
+function mapStateToProps({ nodes, charts, auth }) {
   console.log('charts', charts);
-  return { nodes, charts };
+  return { nodes, charts, auth };
 }
 export default connect(mapStateToProps, {
   fetchAllNodes,

@@ -7,6 +7,7 @@ import {
 } from '../../../actions';
 import _ from 'lodash';
 import Barchart from '../../charts/Barchart';
+import Landing from "../../Landing"
 
 class Zones extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class Zones extends Component {
       this.props
         .fetchLocationZone(this.props.match.params.locationId)
         .then(() => {
-          _.map(this.props.zones.rows, zone => {
+          _.map(this.props.zones, zone => {
             this.setState({
               rows: [...this.state.rows, zone]
             });
@@ -44,7 +45,7 @@ class Zones extends Component {
       };
       //fetch charts based for given  location
       this.props.fetchLocationCharts(values).then(() => {
-        var chartData = this.props.charts.rows[0];
+        var chartData = this.props.charts[0];
         var array_keys = new Array();
         var array_values = new Array();
 
@@ -67,7 +68,7 @@ class Zones extends Component {
       });
     } else {
       this.props.fetchAllZones().then(() => {
-        _.map(this.props.zones.rows, zone => {
+        _.map(this.props.zones, zone => {
           this.setState({
             rows: [...this.state.rows, zone]
           });
@@ -167,20 +168,26 @@ class Zones extends Component {
     );
   }
   render() {
+      var auth=this.props.auth;
     return (
-      <div>
-        <h1> Zones</h1>
+        <div>
+            {auth?(<div>
+                <h1> Zones</h1>
 
-        <div className="row">
-          {this.renderZones()}
-          {this.renderChart()}
+                <div className="row">
+                    {this.renderZones()}
+                    {this.renderChart()}
+                </div>
+            </div>) : (<Landing/>) }
+
         </div>
-      </div>
+
     );
   }
 }
-function mapStateToProps({ zones, charts }) {
-  return { zones, charts };
+function mapStateToProps({ zones, charts,auth }) {
+  console.log(charts);
+  return { zones, charts,auth };
 }
 
 export default connect(mapStateToProps, {
