@@ -1,7 +1,6 @@
-var request = require('request');
-var express = require('express');
-var router = express.Router();
-var token = 'EhzyTdGyXfiqTVYCoPXfWmBxlFSGVLof';
+const request = require('request');
+const express = require('express');
+const router = express.Router();
 
 
 router.get('/', (req, res) => {
@@ -9,7 +8,7 @@ router.get('/', (req, res) => {
   var config = {
     url: 'https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?datasetid=GHCND' + condition,
     headers: {
-      'Token': 'EhzyTdGyXfiqTVYCoPXfWmBxlFSGVLof'
+      'Token': process.env.noaaAccessKey
     }
   };
   request(config, function (error, response, body) {
@@ -29,7 +28,7 @@ router.get('/:stationId', (req, res) => {
     var config = {
       url: 'https://www.ncdc.noaa.gov/cdo-web/api/v2/stations/' + stationId,
       headers: {
-        'Token': token
+        'Token': process.env.noaaAccessKey
       }
     };
 
@@ -39,7 +38,7 @@ router.get('/:stationId', (req, res) => {
     var config = {
       url: 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND' + station_cond + condition,
       headers: {
-        'Token': token
+        'Token': process.env.noaaAccessKey
       }
     };
   }else{
@@ -48,7 +47,7 @@ router.get('/:stationId', (req, res) => {
     var config = {
       url: 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND' + station_cond + condition,
       headers: {
-        'Token': token
+        'Token': process.env.noaaAccessKey
       }
     };
   }
