@@ -182,7 +182,7 @@ class Nodes extends Component {
           className="btn btn-info btn-lg pull-right"
           onClick={this.addNodes.bind(this)}
         >
-          <span className="oi oi-eye">Add Something</span>
+          <span className="oi oi-eye">Add Sensor</span>
         </a>
 
         <h1> Nodes</h1>

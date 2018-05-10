@@ -14,10 +14,11 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    let node_id = req.body.node_id.match(/\d+/);
     const query = {
         text: 'INSERT INTO site_ops.node(node_id, node_address, zone_id, node_name, status)'
         + ' VALUES ($1, $2, $3, $4, $5)',
-        values: [req.body.node_id, req.body.node_address, req.body.zone_id, req.body.node_name, req.body.status],
+        values: [node_id[0], req.body.node_address, req.body.zone_id, req.body.node_name, req.body.status],
     };
 
     Postgress.execQuery(function (error, results) {

@@ -14,22 +14,31 @@ class AddNode extends Component {
   componentDidMount() {
     if (this.props.match.params.zoneId) {
       this.props.fetchNoaaList(this.props.match.params.zoneId).then(() => {
-        _.map(this.props.noaa, noaa => {
-          this.setState({
-            rows: [...this.state.rows, noaa]
+          _.map(this.props.noaa, noaa => {
+              this.setState({
+                  rows: [...this.state.rows, noaa]
+              });
           });
-        });
       });
     }
   }
-  SubscribeClick(value) {
-    var id = this.props.match.params.zoneId;
-    this.props.onSubscribeClick(value).then(() => {
-      this.props.history.push(`/dashboard/zones/${id}/nodes`);
-    });
-  }
-  renderNoaa() {
-    return _.map(this.state.rows, noaa => {
+
+    SubscribeClick(value) {
+        var id = this.props.match.params.zoneId;
+        var values = {
+            node_id: value.id,
+            node_name: value.name,
+            node_address: value.latitude + ',' + value.longitude,
+            zone_id: this.props.match.params.zoneId,
+            status: 1
+        }
+        this.props.onSubscribeClick(values).then(() => {
+            this.props.history.push(`/dashboard/zones/${id}/nodes`);
+        });
+    }
+
+    renderNoaa() {
+        return _.map(this.state.rows, noaa => {
       return (
         <div className="col-md-3" key={noaa.id}>
           <div className="card ">

@@ -87,7 +87,7 @@ export const fetchNoaaList = () => async dispatch => {
 };
 
 export const onSubscribeClick = values => async dispatch => {
-  const res = await axios.get('/api/noaa', values);
+  const res = await axios.post('/api/nodes', values);
   console.log(res);
   dispatch({ type: SUBSCRIBE_NOAA, payload: res.data });
 };
