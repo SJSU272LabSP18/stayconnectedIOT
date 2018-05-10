@@ -1,4 +1,4 @@
-var authRoutes = require('./authRoutes');
+var userRoutes = require('./userRoutes');
 var permissionRoutes = require("./permissionsRoutes");
 var locationRoutes = require('./locationRoutes');
 var siteRoutes = require('./siteRoutes');
@@ -7,7 +7,7 @@ var nodeRoutes = require('./nodeRoutes');
 var noaaRoutes = require('./noaaRoutes');
 
 module.exports = function routes(app) {
-    app.use('/api/users', authRoutes);
+    app.use('/api/users', userRoutes);
     app.use('/api/permissions', permissionRoutes);
     app.use('/api/locations', locationRoutes);
     app.use('/api/sites', siteRoutes);
