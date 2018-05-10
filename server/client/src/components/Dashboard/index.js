@@ -8,6 +8,7 @@ import Nodes from './Nodes/Nodes';
 import Locations from './Locations/Locations';
 import Navbar from '../Navbar/Navbar';
 import Header from '../Header';
+import AddNode from './Nodes/AddNodes';
 class Dashboard extends Component {
   render() {
     return (
@@ -40,6 +41,12 @@ class Dashboard extends Component {
                   component={Nodes}
                 />
                 <Route exact path="/dashboard/nodes" component={Nodes} />
+                <Route
+                  exact
+                  path="/dashboard/zones/:zoneId/noaa"
+                  component={AddNode}
+                  AddNode
+                />
               </div>
             </div>
           </div>

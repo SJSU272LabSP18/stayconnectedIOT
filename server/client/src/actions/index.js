@@ -9,7 +9,9 @@ import {
   FETCH_ZONE_NODES,
   FETCH_LOCATION_CHARTS,
   FETCH_ZONE_CHARTS,
-  FETCH_NODES
+  FETCH_NODES,
+  FETCH_NOAA,
+  SUBSCRIBE_NOAA
 } from './types';
 
 export const fetchUser = () => async dispatch => {
@@ -76,4 +78,16 @@ export const fetchZoneBarChart = values => async dispatch => {
   );
   console.log('fetching zone charts', res);
   dispatch({ type: FETCH_ZONE_CHARTS, payload: res.data });
+};
+
+export const fetchNoaaList = () => async dispatch => {
+  const res = await axios.get('/api/noaa');
+  console.log(res);
+  dispatch({ type: FETCH_NOAA, payload: res.data });
+};
+
+export const onSubscribeClick = values => async dispatch => {
+  const res = await axios.get('/api/noaa', values);
+  console.log(res);
+  dispatch({ type: SUBSCRIBE_NOAA, payload: res.data });
 };
