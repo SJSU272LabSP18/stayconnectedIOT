@@ -4,19 +4,21 @@ import { fetchAllLocations, fetchSiteLocations } from '../../../actions';
 import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import Landing from "../../Landing"
+import cookie from "react-cookies";
 
 class Locations extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: []
+      rows: [],
+        accessToken: cookie.load('accessToken')
     };
   }
   componentDidMount() {
     console.log(this.props.match.params.siteId);
 
     if (this.props.match.params.siteId) {
-      this.props.fetchSiteLocations(this.props.match.params.siteId).then(() => {
+      this.props.fetchSiteLocations(this.props.match.params.siteId, this.state.accessToken).then(() => {
         _.map(this.props.locations, location => {
           this.setState({
             rows: [...this.state.rows, location]
@@ -24,7 +26,7 @@ class Locations extends Component {
         });
       });
     } else {
-      this.props.fetchAllLocations().then(() => {
+      this.props.fetchAllLocations(this.state.accessToken).then(() => {
         console.log('All Locations: ' + JSON.stringify(this.props.locations));
         _.map(this.props.locations, location => {
           this.setState({

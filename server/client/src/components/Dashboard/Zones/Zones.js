@@ -8,6 +8,7 @@ import {
 import _ from 'lodash';
 import Barchart from '../../charts/Barchart';
 import Landing from "../../Landing"
+import cookie from "react-cookies";
 
 class Zones extends Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class Zones extends Component {
       ],
       rows: [],
       showCharts: true,
-      avgConsumption: {}
+      avgConsumption: {},
+        accessToken: cookie.load('accessToken')
     };
   }
   componentDidMount() {
@@ -30,7 +32,7 @@ class Zones extends Component {
     if (this.props.match.params.locationId) {
       //Fetch zones under selected location
       this.props
-        .fetchLocationZone(this.props.match.params.locationId)
+        .fetchLocationZone(this.props.match.params.locationId, this.state.accessToken)
         .then(() => {
           _.map(this.props.zones, zone => {
             this.setState({
@@ -41,7 +43,8 @@ class Zones extends Component {
       var values = {
         locationId: this.props.match.params.locationId,
         startTime: '2018-01-28',
-        endTime: '2018-12-28'
+        endTime: '2018-12-28',
+          accessToken:this.state.accessToken
       };
       //fetch charts based for given  location
       this.props.fetchLocationCharts(values).then(() => {
@@ -67,7 +70,7 @@ class Zones extends Component {
         });
       });
     } else {
-      this.props.fetchAllZones().then(() => {
+      this.props.fetchAllZones(this.state.accessToken).then(() => {
         _.map(this.props.zones, zone => {
           this.setState({
             rows: [...this.state.rows, zone]

@@ -3,11 +3,14 @@ import {auth} from './firebase';
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import {fetchLogin} from "../actions";
+import cookie from 'react-cookies';
+
 var firebase = require('firebase');
 
-class Login extends Component {
+class Login extends Component{
     constructor(props) {
         super(props);
+        this.handleLogin = this.handleLogin.bind(this);
         this.state = {
             usersData: '',
             message:''
@@ -15,23 +18,31 @@ class Login extends Component {
     }
 
     handleLogin(){
-        alert('in login');
+        let accessToken;
+      //  this.props.fetchLogin = this.props.fetchLogin.bind(this);
         var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(function(result) {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            console.log('result '+JSON.stringify(result.user));
-            this.props.fetchLogin(result.credential.accessToken).then((users) => {
-                this.setState({
-                    usersData: users
+        firebase.auth().signInWithPopup(provider).then((result, error) => {
+            if(error){
+                console.log("In Login With Google Error!!")
+            }else{
+                accessToken = result.credential.accessToken;
+                cookie.save('isLoggedIn', 'true', { path: '/' });
+                this.props.fetchLogin(accessToken)
+                    .then((response) => {
+                        // store the userid in local storage
+                        // this.setState({
+                        //     //     usersData: users
+                        //     // });
+                        console.log('After');
                 });
-            });
-            // ...
+            }
         }).catch(function(error) {
-            console.log(error.credential);
-            this.setState({
-                message: 'Not a authorized user'
-            });
+            console.log(error);
+            // this.setState({
+            //     message: 'Not a authorized user'
+            // });
         });
+
     }
 
     render() {
@@ -39,7 +50,7 @@ class Login extends Component {
             <div>
                 <div className="row container">
             <h1> Welcome </h1>
-               hee this is a website welcomne to app <button onClick={()=>this.handleLogin()}
+               hee this is a website welcomne to app <button onClick={this.handleLogin.bind()}
                     type="button"
                     className="navbar-toggle"
                         data-toggle="collapse" value="Google Login">Login </button>

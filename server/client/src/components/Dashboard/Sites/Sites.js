@@ -4,16 +4,19 @@ import {fetchAllSites} from "../../../actions";
 import {withRouter} from "react-router-dom";
 import _ from "lodash";
 import Landing from "../../Landing"
+import cookie from "react-cookies";
+
 class Sites extends Component {
   constructor(props) {
     super(props);
     this.state = {
       rows: [],
-      changeState:false
+      changeState:false,
+      accessToken: cookie.load('accessToken')
     };
   }
   componentDidMount() {
-    this.props.fetchAllSites().then(() => {
+    this.props.fetchAllSites(this.state.accessToken).then(() => {
       _.map(this.props.sites, site => {
         this.setState({
           rows: [...this.state.rows, site]

@@ -6,6 +6,7 @@ import Barchart from "../../charts/Barchart";
 import _ from "lodash";
 import Landing from "../../Landing";
 import {subscribeToData} from "./socket";
+import cookie from "react-cookies";
 
 class Nodes extends Component {
   constructor(props) {
@@ -20,13 +21,14 @@ class Nodes extends Component {
       ],
       rows: [],
       showCharts: true,
-      avgConsumption: {}
+      avgConsumption: {},
+        accessToken: cookie.load('accessToken')
     };
   }
 
   componentDidMount() {
     if (this.props.match.params.zoneId) {
-      this.props.fetchZoneNodes(this.props.match.params.zoneId).then(() => {
+      this.props.fetchZoneNodes(this.props.match.params.zoneId, this.state.accessToken).then(() => {
         _.map(this.props.nodes, node => {
           this.setState({
             rows: [...this.state.rows, node]
@@ -38,7 +40,8 @@ class Nodes extends Component {
       var values = {
         zoneId: this.props.match.params.zoneId,
         startTime: '2018-01-28',
-        endTime: '2018-12-28'
+        endTime: '2018-12-28',
+          accessToken: this.state.accessToken
       };
 
       //fetch charts based for given  location
@@ -65,7 +68,7 @@ class Nodes extends Component {
         });
       });
     } else {
-      this.props.fetchAllNodes().then(() => {
+      this.props.fetchAllNodes(this.state.accessToken).then(() => {
         _.map(this.props.nodes, node => {
           this.setState({
             rows: [...this.state.rows, node]

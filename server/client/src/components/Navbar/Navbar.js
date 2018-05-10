@@ -27,6 +27,7 @@ class Navbar extends Component {
             }else{
                 accessToken = result.credential.accessToken;
                 cookie.save('isLoggedIn', 'true', { path: '/' });
+                cookie.save('accessToken', accessToken, { path: '/' });
                 console.log('access token ' +accessToken);
                 if(accessToken!= null){
                     console.log('After fetch');
@@ -109,6 +110,12 @@ class Navbar extends Component {
                               </div>
                               <br />
 
+                              <div className="nav" id="nav-dashboard">
+                                  <a onClick={this.handleLogin.bind(this)} style={{ color: '#FFF' }}>
+                                      <i className="pe-7s-map-marker" />
+                                      Login
+                                  </a>
+                              </div>
 
                           </div>
                       </div>
