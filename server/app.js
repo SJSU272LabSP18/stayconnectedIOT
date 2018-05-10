@@ -8,12 +8,15 @@ const createError = require('http-errors');
 const admin = require('firebase-admin');
 const firebaseConfig = require('../serviceAccountKey.json');
 let firebaseAuth = require('./middleware/authentication');
+let swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
+
 // let resourceManager = require('./middleware/resourceManager');
 
 const app = express();
 app.use(logger('dev'));
 app.use(compression());
-app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -21,6 +24,8 @@ admin.initializeApp({
     credential: admin.credential.cert(firebaseConfig),
     databaseURL: appConfig.Firebase.DATABASE_URL
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api', firebaseAuth(admin));
 

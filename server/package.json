@@ -42,6 +42,7 @@
     "socker.io": "0.0.0-alpha-beta",
     "socket.io": "^2.0.4",
     "supertest": "^3.0.0",
+    "swagger-ui-express": "^3.0.8",
     "url": "^0.11.0"
   }
 }
