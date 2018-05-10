@@ -107,10 +107,10 @@ class Nodes extends Component {
               <div className="footer">
                 <div className="legend">
                   <i className="fa fa-circle text-info" /> ID:{' '}
-                  {node.node_address}
+                  {node.node_id}
                   <br />
                   <i className="fa fa-circle text-danger" /> Address:{''}
-                  {node.node_id}
+                  {node.node_address}
                   <br />
                   <i className="fa fa-circle text-warning" /> Status:{' '}
                   {node.temperature != null && node.humidity != null
