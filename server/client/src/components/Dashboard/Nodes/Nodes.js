@@ -1,10 +1,14 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {fetchAllNodes, fetchZoneNodes, fetchZoneBarChart} from "../../../actions";
-import {withRouter} from "react-router-dom";
-import Barchart from "../../charts/Barchart";
-import _ from "lodash";
-import {subscribeToData} from "./socket";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {
+  fetchAllNodes,
+  fetchZoneNodes,
+  fetchZoneBarChart
+} from '../../../actions';
+import { withRouter } from 'react-router-dom';
+import Barchart from '../../charts/Barchart';
+import _ from 'lodash';
+import { subscribeToData } from './socket';
 
 class Nodes extends Component {
   constructor(props) {
@@ -30,7 +34,6 @@ class Nodes extends Component {
           this.setState({
             rows: [...this.state.rows, node]
           });
-
         });
       });
 
@@ -85,11 +88,7 @@ class Nodes extends Component {
     nodes[nodeIndex].temperature = data.temperature;
     nodes[nodeIndex].humidity = data.humidity;
     console.log('Node: ', JSON.stringify(nodes[nodeIndex]));
-    this.setState({nodes});
-  }
-
-  componentWillUnmount() {
-
+    this.setState({ nodes });
   }
 
   onDetailClick(nodeId) {
@@ -114,15 +113,15 @@ class Nodes extends Component {
                   {node.node_id}
                   <br />
                   <i className="fa fa-circle text-warning" /> Status:{' '}
-                  {node.temperature != null && node.humidity != null ? 'Active' : 'Inactive'}
+                  {node.temperature != null && node.humidity != null
+                    ? 'Active'
+                    : 'Inactive'}
                   <br />
                   <i className="fa fa-circle text-info" /> Temperature:{' '}
-                    {node.temperature != null ? node.temperature : 'NA'}
-
+                  {node.temperature != null ? node.temperature : 'NA'}
                   <br />
                   <i className="fa fa-circle text-danger" /> Humidity:{' '}
-                    {node.humidity != null ? node.humidity : 'NA'}
-
+                  {node.humidity != null ? node.humidity : 'NA'}
                 </div>
                 <hr />
                 <div className="stats">
@@ -170,10 +169,22 @@ class Nodes extends Component {
       </div>
     );
   }
-
+  addNodes() {
+    this.props.history.push(
+      '/dashboard/zones/' + this.props.match.params.zoneId + '/noaa'
+    );
+  }
   render() {
     return (
       <div>
+        <a
+          href="#"
+          className="btn btn-info btn-lg pull-right"
+          onClick={this.addNodes.bind(this)}
+        >
+          <span className="oi oi-eye">Add Something</span>
+        </a>
+
         <h1> Nodes</h1>
         <div className="row">
           {this.renderNodes()}
