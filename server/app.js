@@ -27,7 +27,7 @@ admin.initializeApp({
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/api', firebaseAuth(admin));
+// app.use('/api', firebaseAuth(admin));
 
 router(app);
 

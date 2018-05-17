@@ -107,10 +107,10 @@ class Nodes extends Component {
               <div className="footer">
                 <div className="legend">
                   <i className="fa fa-circle text-info" /> ID:{' '}
-                  {node.node_address}
+                  {node.node_id}
                   <br />
                   <i className="fa fa-circle text-danger" /> Address:{''}
-                  {node.node_id}
+                  {node.node_address}
                   <br />
                   <i className="fa fa-circle text-warning" /> Status:{' '}
                   {node.temperature != null && node.humidity != null
@@ -182,7 +182,7 @@ class Nodes extends Component {
           className="btn btn-info btn-lg pull-right"
           onClick={this.addNodes.bind(this)}
         >
-          <span className="oi oi-eye">Add Something</span>
+          <span className="oi oi-eye">Add Sensor</span>
         </a>
 
         <h1> Nodes</h1>
