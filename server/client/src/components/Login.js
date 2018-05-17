@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import {auth} from './firebase';
+import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {fetchLogin} from "../actions";
+import {fetchUser} from "../actions";
 var firebase = require('firebase');
 
 class Login extends Component {
@@ -53,4 +52,5 @@ function mapStateToProps({ users }) {
     console.log(users);
     return { users };
 }
-export default connect(mapStateToProps, { fetchLogin })(withRouter(Login));
+
+export default connect(mapStateToProps, { fetchUser })(withRouter(Login));

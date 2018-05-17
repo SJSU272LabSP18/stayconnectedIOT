@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Zones from './Zones/Zones';
-import LocationView from './Location';
 import Sites from './Sites/Sites';
 import Nodes from './Nodes/Nodes';
 import Locations from './Locations/Locations';
 import Navbar from '../Navbar/Navbar';
-import Header from '../Header';
 import AddNode from './Nodes/AddNodes';
 class Dashboard extends Component {
   render() {

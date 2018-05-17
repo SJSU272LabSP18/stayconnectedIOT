@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.get('/', (req, res) => {
     const sql = 'Select * FROM site_ops.zone';
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res.status(401).send({message: 'Error getting All zone'});
         } else {
@@ -17,7 +17,7 @@ router.get('/:zoneId', (req, res) => {
     const zoneId = req.params.zoneId;
     const sql =
         'Select * FROM site_ops.zone where site_ops.zone.zone_id=' + zoneId;
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res.status(401).send({message: 'Error getting All zone'});
         } else {
@@ -30,7 +30,7 @@ router.get('/:zoneId/nodes', (req, res) => {
     const zoneId = req.params.zoneId;
     const sql =
         ' SELECT * FROM site_ops.node where site_ops.node.zone_id =' + zoneId;
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res
                 .status(401)
@@ -63,7 +63,7 @@ router.get('/:zoneId/conditions', (req, res) => {
         endTime +
         "'";
 
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
       console.log('Zone Data for Graph: ', results);
         if (error) {
             res.status(401).send({message: 'Error getting All Nodes'});

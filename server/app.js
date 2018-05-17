@@ -1,20 +1,33 @@
 require('./globals');
 const express = require('express');
-var compression = require('compression');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var router = require('./routes/router');
-var logger = require('morgan');
-var createError = require('http-errors');
+const compression = require('compression');
+const bodyParser = require('body-parser');
+const router = require('./routes/router');
+const logger = require('morgan');
+const createError = require('http-errors');
+const admin = require('firebase-admin');
+const firebaseConfig = require('../serviceAccountKey.json');
+let firebaseAuth = require('./middleware/authentication');
+let swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
 
-const keys = require('./config/keys');
+// let resourceManager = require('./middleware/resourceManager');
 
 const app = express();
 app.use(logger('dev'));
 app.use(compression());
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+admin.initializeApp({
+    credential: admin.credential.cert(firebaseConfig),
+    databaseURL: appConfig.Firebase.DATABASE_URL
+});
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// app.use('/api', firebaseAuth(admin));
 
 router(app);
 

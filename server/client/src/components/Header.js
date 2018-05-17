@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-//require('../assets/css/header.css');
+import React, {Component} from "react";
+import {connect} from "react-redux";
+require('../assets/css/header.css');
 
 class Header extends Component {
   renderContent() {

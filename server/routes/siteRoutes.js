@@ -1,11 +1,10 @@
-var Postgress = require('../db/db');
-var express = require('express');
-var router = express.Router();
+const Postgress = require('../db/db');
+const express = require('express');
+const router = express.Router();
 
 router.get('/', (req, res) => {
-    console.log('Here to get the sites');
     const sql = 'Select * FROM site_ops.site';
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res.status(401).send({message: 'Error getting All sites'});
         } else {
@@ -20,7 +19,7 @@ router.get('/:siteId', (req, res) => {
     const sql =
         'Select * FROM site_ops.site where site_ops.site.site_id=' + siteId;
 
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             console.log(error);
             res.status(401).send({message: 'Error getting specified site'});
@@ -38,7 +37,7 @@ router.get('/:siteId/locations/:locationId', (req, res) => {
         ' and site_ops.location.site_id=' +
         siteId;
 
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res.status(401).send({
                 message: 'Error getting specific location for a given site'
@@ -54,7 +53,7 @@ router.get('/:siteId/locations', (req, res) => {
     const sql =
         'Select * FROM site_ops.location where site_ops.location.site_id=' +
         siteId;
-    Postgress.fetchData(function (error, results) {
+    Postgress.execQuery(function (error, results) {
         if (error) {
             res
                 .status(401)
